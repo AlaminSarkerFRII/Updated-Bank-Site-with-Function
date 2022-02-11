@@ -11,7 +11,7 @@ function getInputValue(inputId){
     return amountValue;
 }
 
-// use function for deposite and withdraw filed.......
+// use function for deposite and withdraw input filed.......
 
 function updateTotalField(totalFieldId,amount){
     // debugger;
@@ -65,6 +65,7 @@ function updateBalance(amount,isAdd){
 
 //////////////////////////////////////////////////////////////////////
 
+// Click Handler and reduce code using nested function.............
 
 document.getElementById('deposit-btn').addEventListener('click', function(){
   
@@ -98,9 +99,7 @@ balanceTotal.innerText = previousBalanceTotal + depositAmount;
     if(depositAmount > 0){
         updateTotalField('deposit-total',depositAmount);
         updateBalance(depositAmount,true);
-
     }
- 
 });
 
 
