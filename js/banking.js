@@ -14,13 +14,44 @@ function getInputValue(inputId){
 // use function for deposite and withdraw filed.......
 
 function updateTotalField(totalFieldId,amount){
-    debugger;
+    // debugger;
+
     const totalElement = document.getElementById(totalFieldId);
    const totalText = totalElement.innerText; //text hisabe pabo....
    const previousTotal = parseFloat(totalText); // floaat a convert korbe
 
    totalElement.innerText = previousTotal + amount;
+}
 
+
+function getCurrentBalance(){
+    const balanceTotal = document.getElementById('balance-total');
+    const balanceTotalText = balanceTotal.innerText;
+    const previousBalanceTotal = parseFloat(balanceTotalText);
+    return previousBalanceTotal;
+}
+
+
+
+
+function updateBalance(amount,isAdd){
+   
+   const balanceTotal = document.getElementById('balance-total');
+   
+   /*
+    const balanceTotalText = balanceTotal.innerText;
+    const previousBalanceTotal = parseFloat(balanceTotalText);
+     */
+
+    const previousBalanceTotal = getCurrentBalance();
+
+    if(isAdd ==true){
+        balanceTotal.innerText = previousBalanceTotal + amount; 
+    }
+    
+    else{
+        balanceTotal.innerText = previousBalanceTotal - amount; 
+    }  
 }
 
 
@@ -30,12 +61,19 @@ function updateTotalField(totalFieldId,amount){
 
 
 
-document.getElementById('deposit-btn').addEventListener('click', function(){
-  /*  const depositInput = document.getElementById('deposit-input');
-   const depositAmountText = depositInput.value;
-   const depositAmount = parseFloat(depositAmountText); */
 
-   const depositAmount = getInputValue('deposit-input');
+
+//////////////////////////////////////////////////////////////////////
+
+
+document.getElementById('deposit-btn').addEventListener('click', function(){
+  
+  
+/* 
+   const depositInput = document.getElementById('deposit-input');
+   const depositAmountText = depositInput.value;
+   const depositAmount = parseFloat(depositAmountText); 
+   */
 
    //get current Deposit Amount
 
@@ -44,21 +82,27 @@ document.getElementById('deposit-btn').addEventListener('click', function(){
    const depositTotalText = depositTotal.innerText; //text hisabe pabo....
    const previousDepositTotal = parseFloat(depositTotalText); // floaat a convert korbe
    depositTotal.innerText = previousDepositTotal + depositAmount;
-   
    */
-  updateTotalField('deposit-total',depositAmount);
-
+ 
    //update main Balance ...........
 
+/* 
 const balanceTotal = document.getElementById('balance-total');
-
 const balanceTotalText = balanceTotal.innerText;
 const previousBalanceTotal = parseFloat(balanceTotalText);
 balanceTotal.innerText = previousBalanceTotal + depositAmount; 
 
+ */
 
+    const depositAmount = getInputValue('deposit-input');
+    if(depositAmount > 0){
+        updateTotalField('deposit-total',depositAmount);
+        updateBalance(depositAmount,true);
+
+    }
  
 });
+
 
 // <======handle withdraw balance ======>
 
@@ -67,7 +111,6 @@ document.getElementById('withdraw-btn').addEventListener('click', function(){
     const withdrawAmountText = withdrawInput.value;
     const withdrawAmount = parseFloat(withdrawAmountText); */
     // console.log(withdrawTotal);
-const withdrawAmount = getInputValue('withdraw-input');
 
     //update withdraw balance........
    /*
@@ -77,18 +120,23 @@ const withdrawAmount = getInputValue('withdraw-input');
    withdrawTotal.innerText = previousWithdrawTotal + withdrawAmount;
     */
 
-   updateTotalField('withdraw-total',withdrawAmount)
-
 // update main balance after withdraw ............
 
-const balanceTotal = document.getElementById('balance-total');
+/* const balanceTotal = document.getElementById('balance-total');
 const balanceTotalText = balanceTotal.innerText;
 const previousBalanceTotal = parseFloat(balanceTotalText);
 balanceTotal.innerText = previousBalanceTotal - withdrawAmount;
+ */
 
-
-
-
-
+    const withdrawAmount = getInputValue('withdraw-input');
+    const currentBalance = getCurrentBalance();
+    if(withdrawAmount >0 && withdrawAmount< currentBalance ){
+        updateTotalField('withdraw-total',withdrawAmount)
+        updateBalance(withdrawAmount,false);
+    }
+    if(withdrawAmount > currentBalance){
+        alert ("you can't withdraw this amount");
+    }
+  
 })
 
